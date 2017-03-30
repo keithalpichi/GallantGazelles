@@ -34,6 +34,10 @@ app.use(express.static(path.resolve(__dirname, '../client')));
 app.use('/api', router);
 app.use('/auth', auth);
 
+app.get('*', function(req, res) {
+	res.sendFile(path.resolve(__dirname, '../client/index.html'))
+})
+
 app.listen(8080, function() {
 	console.log('listening to 8080');
 });
