@@ -5,7 +5,7 @@ import TrendingVideos from './TrendingVideos.jsx';
 import axios from 'axios';
 import { Container, Dimmer, Divider, Loader } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { fetchPitches } from '../actions/pitch';
+import { fetchTopPitches } from '../actions/pitch';
 
 class App extends Component {
   constructor(props) {
@@ -14,7 +14,7 @@ class App extends Component {
 
   componentWillMount() {
     const {dispatch} = this.props;
-    dispatch(fetchPitches())
+    dispatch(fetchTopPitches())
   }
 
   render() {
