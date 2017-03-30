@@ -20,10 +20,10 @@ ON (pitchTable.id = uservote.pitch_id);`);
 module.exports.getTopPitches = (byAmount = 10) => {
 	return db.query(`
 SELECT pitchTable.*, followertable.follow_count, votestable.votes
-FROM (SELECT * FROM pitches) pitchTable
-LEFT JOIN (SELECT count(followers.id) follow_count, pitch_id FROM followers GROUP BY pitch_id) followertable
+FROM pitches AS pitchTable
+LEFT JOIN (SELECT count(followers.id) follow_count, pitch_id FROM followers GROUP BY pitch_id) AS followertable
 ON (pitchTable.id = followertable.pitch_id)
-LEFT JOIN (SELECT sum(vote_type) votes, pitch_id FROM votes GROUP BY pitch_id) votestable
+LEFT JOIN (SELECT sum(vote_type) votes, pitch_id FROM votes GROUP BY pitch_id) AS votestable
 ON (pitchTable.id = votestable.pitch_id) ORDER BY votes DESC
 LIMIT ${byAmount}
 ;`)
