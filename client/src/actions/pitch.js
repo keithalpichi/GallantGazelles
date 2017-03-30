@@ -30,6 +30,15 @@ export function fetchPitches(category = 'all') {
   }
 }
 
+export function fetchTopPitches(category = 'top') {
+  return function(dispatch) {
+    dispatch(requestPitches());
+    axios.get('http://localhost:8080/api/pitches?q=top')
+    .then(results => dispatch(receivePitches(results)))
+    .catch(error => dispatch(errorPitches(error)))
+  }
+}
+
 export function selectPitch (pitchId) {
   return {
     type: 'SELECT_PITCH',
