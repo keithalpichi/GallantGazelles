@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import {
   BrowserRouter as Router,
   Route,
-  Link
+  Link,
+  Switch
 } from 'react-router-dom';
 
 import App from './components/App.jsx';
@@ -25,14 +26,16 @@ const Index = () => (
   <Router>
     <Container>
       <NavBar />
-      <Route exact path="/" component={ App }/>
-      <Route path="/startups" component={ Companies }/>
-      <Route path="/createpitch" component={ CreatePitch }/>
-      <Route path="/pitch/:pitchId" component={ Pitch }/>
-      <Route path="/signup" component={ SignUp }/>
-      <Route path="/signin" component={ SignIn }/>
-      <Route path="/notfound" component={ NotFound }/>
-      <Route path="/user" component={ UserProfile }/>
+      <Switch>
+        <Route exact path="/" component={ App }/>
+        <Route path="/startups" component={ Companies }/>
+        <Route path="/createpitch" component={ CreatePitch }/>
+        <Route path="/pitch/:pitchId" render={props => <Pitch {...props}/> }/>
+        <Route path="/signup" component={ SignUp }/>
+        <Route path="/signin" component={ SignIn }/>
+        <Route path="/user" component={ UserProfile }/>
+        <Route path="*" component={ NotFound }/>
+      </Switch>
       <Divider hidden />
       <Footer />
     </Container>
