@@ -8,7 +8,7 @@ const db = require('../db.js');
 //new getAllPitches:
 module.exports.getAllPitches = (user_id) => {
 	return db.query(`SELECT pitchTable.*, followertable.follow_count, votestable.votes, uservote.vote_type
-FROM (SELECT * FROM pitches) pitchTable 
+FROM (SELECT * FROM pitches) pitchTable
 LEFT JOIN (SELECT count(followers.id) follow_count, pitch_id FROM followers GROUP BY pitch_id) followertable
 ON (pitchTable.id = followertable.pitch_id)
 LEFT JOIN (SELECT sum(vote_type) votes, pitch_id FROM votes GROUP BY pitch_id) votestable
@@ -16,6 +16,18 @@ ON (pitchTable.id = votestable.pitch_id)
 LEFT JOIN (SELECT vote_type, pitch_id FROM votes WHERE user_id =${user_id}) uservote
 ON (pitchTable.id = uservote.pitch_id);`);
 };
+
+module.exports.getTopPitches = (byAmount = 10) => {
+	return db.query(`
+SELECT pitchTable.*, followertable.follow_count, votestable.votes
+FROM (SELECT * FROM pitches) pitchTable
+LEFT JOIN (SELECT count(followers.id) follow_count, pitch_id FROM followers GROUP BY pitch_id) followertable
+ON (pitchTable.id = followertable.pitch_id)
+LEFT JOIN (SELECT sum(vote_type) votes, pitch_id FROM votes GROUP BY pitch_id) votestable
+ON (pitchTable.id = votestable.pitch_id) ORDER BY votes DESC
+LIMIT ${byAmount}
+;`)
+}
 
 //add pitch, needs all info:
 module.exports.getPitchByPitchId = (pitchId) => {
@@ -45,7 +57,7 @@ module.exports.getPitchByUserId = (userId) => {
 
 module.exports.getSinglePitch = (pitchId, userId) => {
   return db.query(`SELECT pitchTable.*, followertable.follow_count, votestable.votes, uservote.vote_type
-FROM (SELECT * FROM pitches WHERE pitches.id=${pitchId}) pitchTable 
+FROM (SELECT * FROM pitches WHERE pitches.id=${pitchId}) pitchTable
 LEFT JOIN (SELECT count(followers.id) follow_count, pitch_id FROM followers GROUP BY pitch_id) followertable
 ON (pitchTable.id = followertable.pitch_id)
 LEFT JOIN (SELECT sum(vote_type) votes, pitch_id FROM votes GROUP BY pitch_id) votestable
