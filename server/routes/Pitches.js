@@ -15,6 +15,10 @@ module.exports.getPitches = (req, res, next) => {
         .then(results => res.status(200).send(results.rows))
         .catch(error => res.status(404).json(error));
     }
+  } else if (q === 'top') {
+    Pitch.getTopPitches(10)
+      .then(results => res.status(200).send(results.rows))
+      .catch(error => res.status(404).json(error));
   } else if (q === 'pitch') {
     Pitch.getPitchByPitchId(pitchId)
       .then(results => res.status(200).send(results.rows))
