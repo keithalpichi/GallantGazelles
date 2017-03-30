@@ -11,9 +11,6 @@ const app = express();
 const router = require('./routes.js');
 
 app.use(cookieParser());
-// app.use(express.static(path.join(__dirname, '/../client/')));
-//Test for redux
-// app.use(express.static(path.join(__dirname, '/../redux/')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 const sessionOptions = {
@@ -30,16 +27,10 @@ app.use(session(sessionOptions));
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(express.static(path.join(__dirname, '/../client/')));
-app.use('/', express.static(path.join(__dirname, '/../client/')));
-app.use('/startups', express.static(path.join(__dirname, '/../client/')));
-app.use('/createpitch', express.static(path.join(__dirname, '/../client/')));
-app.use('/pitch', express.static(path.join(__dirname, '/../client/')));
-app.use('/pitch/:pitchId', express.static(path.join(__dirname, '/../client/')));
-app.use('/signup', express.static(path.join(__dirname, '/../client/')));
-app.use('/signin', express.static(path.join(__dirname, '/../client/')));
-app.use('/notfound', express.static(path.join(__dirname, '/../client/')));
-app.use('/user', express.static(path.join(__dirname, '/../client/')));
+// Setup /client as static directory
+app.use(express.static(path.resolve(__dirname, '../client')));
+
+// Api and Authentication routes
 app.use('/api', router);
 app.use('/auth', auth);
 
@@ -48,4 +39,3 @@ app.listen(8080, function() {
 });
 
 module.exports = app;
-
