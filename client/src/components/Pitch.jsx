@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { upvote, downvote } from '../actions/pitch';
 import { fetchPitch } from '../actions/pitchPage';
-import { followPitch } from '../actions/followPitch';
+import { followPitch } from '../actions/followPitch.js';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import Video from './Video.jsx';
@@ -41,7 +41,8 @@ class Pitch extends Component {
 
   render() {
     const {user, id, vote_type} = this.props
-    const {onClickUpvote, onClickDownvote, onTypeChange } = this.props
+    console.log('THIS.PROPS', this.props)
+    const {onClickUpvote, onClickDownvote, onTypeChange, onClickFollowPitch} = this.props
     const upvoteButton = <Button icon size='big' color='green' onClick={() => onClickUpvote(user, id, vote_type)}><Icon name='arrow up' /></Button>
     const downvoteButton = <Button icon size='big' color='red' onClick={() => onClickDownvote(user, id, vote_type)}><Icon name='arrow down' /></Button>
     const neutralUpButton = (<Button icon basic size='big' color='grey' onClick={() => onClickUpvote(user, id, vote_type)}><Icon name='arrow up' /></Button>)
@@ -74,7 +75,7 @@ class Pitch extends Component {
                 </Header>
                 <p>{this.props.profile}</p>
                 <p>
-                  <Button primary>Follow</Button>
+                  <Button primary onClick={() => onClickFollowPitch(user, id)}>Follow</Button>
                   <Button primary>Visit Website</Button>
                   <Button primary>Invest</Button>
                   <Button primary><Icon name='share' />  Share</Button>
@@ -108,12 +109,13 @@ const mapStateToProps = (state) => {
   }
 }
 const mapDispatchToProps = (dispatch) => {
+  console.log('FOLLOWPITCH1', followPitch)
   return {
     onClickUpvote: (user, pitchid, vote) => { dispatch(upvote(user, pitchid, vote)) },
     onClickDownvote: (user, pitchid, vote) => { dispatch(downvote(user, pitchid, vote)) },
     getPitch: (pitchid, userid) => { dispatch(fetchPitch(pitchid, userid)) },
     getComments: (pitchid) => { dispatch(fetchPitchComments(pitchid)) },
-    onClickFollowPitch: (userid, pitchid) => {dispatch(followPitch(userid, pitchid))}
+    onClickFollowPitch: (userid, pitchid) => { dispatch(followPitch(userid, pitchid)) }
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Pitch);

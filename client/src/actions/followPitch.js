@@ -7,8 +7,10 @@ function pitchFollowToggleSuccessful(results) { //shows if user is following the
 }
 
 function pitchFollowError(error) {
-  type: 'FOLLOW_ERROR',
-  error
+  return {
+    type: 'FOLLOW_ERROR',
+    error
+  }
 }
 
 export function followPitch(userid, pitchid) {
