@@ -12,7 +12,7 @@ const renderColumns = (array, columnAmount) => {
       let innerItem = array[j]
       innerArray.push(innerItem)
     }
-    if (i !== j) { map.push(innerArray) }
+    if (innerArray.length > 0) { map.push(innerArray) }
     if (i + columnAmount >= array.length) {
       leftOverIndex = i
     }
