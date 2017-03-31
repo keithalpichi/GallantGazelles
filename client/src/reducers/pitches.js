@@ -33,7 +33,7 @@ export default function pitches (state = initialState, action) {
         ...state,
         isFetching: false,
         mainPitch: action.pitches[state.index],
-        pitches: action.pitches,
+        pitches: action.pitches.slice(1),
         error: null
       };
     case 'NEXT_PITCH':
