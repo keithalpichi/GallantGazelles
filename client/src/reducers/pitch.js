@@ -1,6 +1,7 @@
 const initialState = {
   pitch: {},
-  isFetchingPitch: false
+  isFetchingPitch: false,
+  isFollowing: false
 }
 
 function pitchPage (state = initialState, action) {
@@ -9,6 +10,11 @@ function pitchPage (state = initialState, action) {
       return {
         ...state,
         isFetchingPitch: true
+      }
+    case 'TOGGLE_ISFOLLOWING':
+      return {
+        ...state,
+        isFollowing: action.isFollowing
       }
     default:
       return state;

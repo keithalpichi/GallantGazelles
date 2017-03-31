@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import Video from './Video.jsx';
 import Discussion from './Discussion.jsx';
+import { Link } from 'react-router-dom';
 import {
   Button, Container, Dimmer, Divider, Grid, Header, Icon, Image, Item, Label, Loader, Segment, Statistic
 } from 'semantic-ui-react';
@@ -75,7 +76,7 @@ class Pitch extends Component {
                 </Header>
                 <p>{this.props.profile}</p>
                 <p>
-                  <Button primary onClick={() => onClickFollowPitch(user, id)}>Follow</Button>
+                  { user ? <Button primary onClick={() => onClickFollowPitch(user, id)}>Follow</Button> : <Button primary as={Link} to='/signin'>Follow</Button> } 
                   <Button primary>Visit Website</Button>
                   <Button primary>Invest</Button>
                   <Button primary><Icon name='share' />  Share</Button>

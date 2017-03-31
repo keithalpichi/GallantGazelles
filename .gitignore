@@ -2,3 +2,4 @@
 node_modules/
 client/semantic/dist/themes/
 client/dist/
+npm-debug.log

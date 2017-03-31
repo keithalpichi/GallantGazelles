@@ -1,8 +1,15 @@
 import axios from 'axios';
 
-function pitchFollowToggleSuccessful(results) { //shows if user is following the pitch
+function toggleFollow() { //shows if user is following the pitch
   return {
-    type: 'TOGGLE_FOLLOW'
+    type: 'TOGGLE_FOLLOW',
+  }
+}
+
+function toggleFollowPitch(isFollowing) { //shows if user is following the pitch
+  return {
+    type: 'TOGGLE_ISFOLLOWING',
+    isFollowing
   }
 }
 
@@ -13,10 +20,23 @@ function pitchFollowError(error) {
   }
 }
 
-export function followPitch(userid, pitchid) {
+export function followPitch(userId, pitchId) {
   return (dispatch) => {
-    axios.post('http://localhost:8080/api/followers', {userid, pitchid} )
-    .then(results => dispatch(pitchFollowSuccessful(results)))
+    dispatch(toggleFollow())
+    axios.post('http://localhost:8080/api/followers', {userId, pitchId} )
+    .then(results => dispatch(toggleFollowPitch(true)))
+    .catch(error => {
+      console.log(error);
+      dispatch(pitchFollowError(error))
+    })
+  }
+}
+
+export function unfollowPitch(userId, pitchId) {
+  return (dispatch) => {
+    dispatch(toggleFollow())
+    axios.delete('http://localhost:8080/api/followers', {userId, pitchId} )
+    .then(results => dispatch(toggleFollowPitch(false)))
     .catch(error => dispatch(pitchFollowError(error)))
   }
 }

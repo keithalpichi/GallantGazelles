@@ -14,9 +14,11 @@ module.exports.getUserPitchFollows = (userId) => {
 };
 
 module.exports.postNewPitchFollower = (userId, pitchId) => {
-  return db.query(`INSERT INTO followers (user_id, pitch_id) SELECT ${userId}, ${pitchId} WHERE NOT EXISTS (SELECT 1 FROM followers WHERE user_id = ${userId} AND pitch_id = ${pitchId});`);
+  return db.query(`INSERT INTO followers (user_id, pitch_id) VALUES (${userId}, ${pitchId});`);
 };
 
 module.exports.deletePitchFollower = (userId, pitchId) => {
-  return db.query(`DELETE FROM followers WHERE user_id = ${userId} AND pitch_id = ${pitchId}`);
-}
+  return db.query(`DELETE FROM followers WHERE user_id = ${userId} AND pitch_id = ${pitchId};`);
+};
+
+//INSERT INTO followers (user_id, pitch_id) SELECT ${userId}, ${pitchId} WHERE NOT EXISTS (SELECT 1 FROM followers WHERE user_id = ${userId} AND pitch_id = ${pitchId});`
