@@ -2,8 +2,7 @@ import axios from 'axios';
 
 function pitchFollowToggleSuccessful(results) { //shows if user is following the pitch
   return {
-    type: 'TOGGLE_FOLLOW',
-    results
+    type: 'TOGGLE_FOLLOW'
   }
 }
 

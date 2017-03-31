@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { upvote, downvote } from '../actions/pitch';
 import { fetchPitch } from '../actions/pitchPage';
+import { followPitch } from '../actions/followPitch';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import Video from './Video.jsx';
@@ -111,7 +112,8 @@ const mapDispatchToProps = (dispatch) => {
     onClickUpvote: (user, pitchid, vote) => { dispatch(upvote(user, pitchid, vote)) },
     onClickDownvote: (user, pitchid, vote) => { dispatch(downvote(user, pitchid, vote)) },
     getPitch: (pitchid, userid) => { dispatch(fetchPitch(pitchid, userid)) },
-    getComments: (pitchid) => { dispatch(fetchPitchComments(pitchid)) }
+    getComments: (pitchid) => { dispatch(fetchPitchComments(pitchid)) },
+    onClickFollowPitch: (userid, pitchid) => {dispatch(followPitch(userid, pitchid))}
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Pitch);
