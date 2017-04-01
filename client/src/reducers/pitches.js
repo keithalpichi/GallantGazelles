@@ -33,11 +33,12 @@ export default function pitches (state = initialState, action) {
       return {
         ...state,
         isFetching: false,
-        mainPitch: action.pitches.trendingPitches ? action.pitches.trendingPitches : action.pitches.topPitches,
+        mainPitch: action.pitches.trendingPitches ? action.pitches.trendingPitches[0] : action.pitches.topPitches[0],
         trendingPitches: action.pitches.trendingPitches ? action.pitches.trendingPitches : [],
         topPitches: action.pitches.topPitches ? action.pitches.topPitches : [],
         error: null
       }
+      /*
     case 'RECEIVE_TRENDING_PITCHES':
       return {
         ...state,
@@ -54,6 +55,7 @@ export default function pitches (state = initialState, action) {
         topPitches: action.pitches.topPitches.slice(1),
         error: null
       };
+      */
     case 'NEXT_PITCH':
       let nextIndex = state.index + 1;
       return {
