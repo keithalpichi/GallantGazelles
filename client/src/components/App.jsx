@@ -42,7 +42,6 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log('App.js ', state);
   return {
     topPitches: state.pitches.topPitches,
     trendingPitches: state.pitches.trendingPitches ? state.pitches.trendingPitches : null,
