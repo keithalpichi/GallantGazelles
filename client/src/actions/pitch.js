@@ -49,7 +49,7 @@ export function fetchBothCategoryPitches(category = 'both') {
     dispatch(requestPitches());
     //We can possibly define categories here?
     axios.get('http://localhost:8080/api/pitches?q=both')
-    .then(results => dispatch(receivePitches(results)))
+    .then(results => dispatch(receiveBothCategoryPitches(results)))
     .catch(error => dispatch(errorPitches(error)))
   }
 }
