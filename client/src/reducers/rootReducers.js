@@ -7,8 +7,10 @@ import createUser from './createUser';
 import signIn from './signIn';
 import userPage from './userPage';
 import comments from './comments';
+import pitchCategory from './pitchCategory'
 
 const appReducer = combineReducers({
+  pitchCategory,
   pitches,
   pitchPage,
   createPitch,
