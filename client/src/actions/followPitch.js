@@ -20,15 +20,32 @@ function pitchFollowError(error) {
   }
 }
 
+export function isFollowingPitch(userId, pitchId) {
+  return (dispatch) => {
+    dispatch(toggleFollow())
+    axios.get('http://localhost:8080/api/following', {
+      params: {
+        userId: userId,
+        pitchId: pitchId
+      }
+    })
+    .then(results => {
+      if (results.length === 0) {
+        dispatch(toggleFollowPitch(false))
+      } else {
+        dispatch(toggleFollowPitch(true))
+      }
+    })
+    .catch(error => dispatch(pitchFollowError(error)))
+  }
+}
+
 export function followPitch(userId, pitchId) {
   return (dispatch) => {
     dispatch(toggleFollow())
     axios.post('http://localhost:8080/api/followers', {userId, pitchId} )
     .then(results => dispatch(toggleFollowPitch(true)))
-    .catch(error => {
-      console.log(error);
-      dispatch(pitchFollowError(error))
-    })
+    .catch(error => dispatch(pitchFollowError(error)))
   }
 }
 

@@ -45,3 +45,11 @@ module.exports.removeFollower = (req, res, next) => {
     .then(results => res.send())
     .catch(error => res.status(404).send(error));
 };
+
+module.exports.isFollowing = (req, res, next) => {
+  const { userId, pitchId } = req.query;
+
+  db.getIfUserFollowPitch(userId, pitchId)
+    .then(results => res.send(results.rows))
+    .catch(error => res.status(404).send(error));
+}
