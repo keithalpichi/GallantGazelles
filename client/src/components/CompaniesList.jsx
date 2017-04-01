@@ -15,8 +15,6 @@ class CompaniesList extends Component {
   }
 
   render() {
-    console.log('alksfaslkdjf', this.props);
-
     if (this.props.pitches.length > 0) {
       return (
         <Container text>

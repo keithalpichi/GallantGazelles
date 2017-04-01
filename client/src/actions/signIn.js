@@ -42,11 +42,5 @@ export function signIn(username, password) {
         dispatch(signInError(err));
       }
     });
-    // axios.post('http://localhost:8080/auth/signin', {username, password} )
-    // .then((results) => {
-    //   console.log('hehehehehehe');
-    //   dispatch(completeSignIn(results.data.username, results.data.user_id));
-    // })
-    // .catch(error => dispatch(signInError(error)))
   };
 }

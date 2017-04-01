@@ -34,32 +34,6 @@ const renderColumns = (array, columnAmount) => {
   </Grid>
 }
 
-// const TrendingVideos = (props) => {
-//   console.log('TrendingVideos props ', props);
-//   if (props.pitches.length > 0) {
-//     return (
-//       <section>
-//         <Divider horizontal>
-//           <Header as='h4'>
-//             <Icon name='line chart' />
-//             Trending Pitches
-//           </Header>
-//         </Divider>
-//         <Divider hidden />
-//         <Menu attached='top'>
-//           <Menu.Item name='trending' active={props.pitchCategory === 'trending'} onClick={this.props.setPitchCategoryToTrending} />
-//           <Menu.Item name='top' active={props.pitchCategory === 'top'} onClick={this.props.setPitchCategoryToTop} />
-//         </Menu>
-//         <Segment attached='bottom'>
-//           {renderColumns(props.pitches, 3)}
-//         </Segment>
-//       </section>
-//     )
-//   } else {
-//     return null
-//   }
-// }
-
 class TrendingVideos extends React.Component {
   constructor(props) {
     super(props)
@@ -88,7 +62,6 @@ class TrendingVideos extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log('TrendingVideos.js ', state.pitches);
   return {
     pitches: state.pitchCategory === 'top' ? state.pitches.topPitches : state.pitches.trendingPitches,
     pitchCategory: state.pitchCategory
