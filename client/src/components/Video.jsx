@@ -27,11 +27,4 @@ let Video = (props) => {
   }
 }
 
-
-const mapStateToProps = (state) => {
-  return {
-    video: state.mainPitch.video
-  }
-}
-
 export default Video;
