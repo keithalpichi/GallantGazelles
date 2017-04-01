@@ -30,7 +30,7 @@ export function isFollowingPitch(userId, pitchId) {
       }
     })
     .then(results => {
-      if (results.length === 0) {
+      if (results.data.length === 0) {
         dispatch(toggleFollowPitch(false))
       } else {
         dispatch(toggleFollowPitch(true))

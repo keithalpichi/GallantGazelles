@@ -19,19 +19,19 @@ class Pitch extends Component {
   }
 
   componentWillMount() {
-    let { dispatch, getPitch, getComments, getIfFollowingPitch, user, id} = this.props;
+    let { dispatch, getPitch, getComments} = this.props;
     let pitchId = this.props.match.params.pitchId;
     console.log('this pitchid', pitchId)
     getPitch(this.props.user, pitchId);
     getComments(pitchId);
-    isFollowingPitch(user, id);
   }
 
   componentWillReceiveProps(nextProps) {
-    let { dispatch, getPitch } = this.props;
+    let { dispatch, getPitch, getIfFollowingPitch } = this.props;
     let pitchId = this.props.match.params.pitchId;
     if (this.props.user !== nextProps.user) {
-      getPitch(nextProps.user, pitchId);
+    getPitch(nextProps.user, pitchId);
+    getIfFollowingPitch(nextProps.user, pitchId);
       // axios.get('http://localhost:8080/api/pitch', {params: {pitchId: pitchId}})
       //   .then(results => {
       //     this.setState({pitch: results.data[0]});
@@ -42,13 +42,15 @@ class Pitch extends Component {
   }
 
   render() {
-    const {user, id, vote_type} = this.props
+    const {user, id, vote_type, isFollowing} = this.props
     console.log('THIS.PROPS', this.props)
-    const {onClickUpvote, onClickDownvote, onTypeChange, onClickFollowPitch} = this.props
+    const {onClickUpvote, onClickDownvote, onTypeChange, onClickFollowPitch, onClickUnfollowPitch} = this.props
     const upvoteButton = <Button icon size='big' color='green' onClick={() => onClickUpvote(user, id, vote_type)}><Icon name='arrow up' /></Button>
     const downvoteButton = <Button icon size='big' color='red' onClick={() => onClickDownvote(user, id, vote_type)}><Icon name='arrow down' /></Button>
     const neutralUpButton = (<Button icon basic size='big' color='grey' onClick={() => onClickUpvote(user, id, vote_type)}><Icon name='arrow up' /></Button>)
     const neutralDownButton = <Button icon basic size='big' color='grey' onClick={() => onClickDownvote(user, id, vote_type)}><Icon name='arrow down' /></Button>
+    const userFollowButton = isFollowing ? <Button primary onClick={() => onClickUnfollowPitch(user, id)}>Unfollow</Button> : <Button primary onClick={() => onClickFollowPitch(user, id)}>Follow</Button>
+    const signUpButton = <Button primary as={Link} to='/signin'>Follow</Button>
 
     if (this.props.name) {
       return (
@@ -77,7 +79,7 @@ class Pitch extends Component {
                 </Header>
                 <p>{this.props.profile}</p>
                 <p>
-                  { user ? <Button primary onClick={() => onClickFollowPitch(user, id)}>Follow</Button> : <Button primary as={Link} to='/signin'>Follow</Button> } 
+                  { user ? userFollowButton : signUpButton  } 
                   <Button primary>Visit Website</Button>
                   <Button primary>Invest</Button>
                   <Button primary><Icon name='share' />  Share</Button>
@@ -119,6 +121,7 @@ const mapDispatchToProps = (dispatch) => {
     getPitch: (pitchid, userid) => { dispatch(fetchPitch(pitchid, userid)) },
     getComments: (pitchid) => { dispatch(fetchPitchComments(pitchid)) },
     onClickFollowPitch: (userid, pitchid) => { dispatch(followPitch(userid, pitchid)) },
+    onClickUnfollowPitch: (userid, pitchid) => { dispatch(unfollowPitch(userid, pitchid)) },
     getIfFollowingPitch: (userid, pitchid) => { dispatch(isFollowingPitch(userid, pitchid)) }
   }
 }

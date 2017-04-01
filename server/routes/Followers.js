@@ -43,7 +43,10 @@ module.exports.removeFollower = (req, res, next) => {
   // EXAMPLE: /api/followers?userId=3&pitchId=2
   db.deletePitchFollower(userId, pitchId)
     .then(results => res.send())
-    .catch(error => res.status(404).send(error));
+    .catch(error => {
+      console.log('ERROR____', error)
+      res.status(404).send(error)
+    });
 };
 
 module.exports.isFollowing = (req, res, next) => {
@@ -51,5 +54,7 @@ module.exports.isFollowing = (req, res, next) => {
 
   db.getIfUserFollowPitch(userId, pitchId)
     .then(results => res.send(results.rows))
-    .catch(error => res.status(404).send(error));
+    .catch(error => {
+      res.status(404).send(error)
+    });
 }
