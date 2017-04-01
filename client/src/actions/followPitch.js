@@ -52,7 +52,12 @@ export function followPitch(userId, pitchId) {
 export function unfollowPitch(userId, pitchId) {
   return (dispatch) => {
     dispatch(toggleFollow())
-    axios.delete('http://localhost:8080/api/followers', {userId, pitchId} )
+    axios.delete('http://localhost:8080/api/followers', {
+      params: {
+        userId: userId,
+        pitchId: pitchId
+      }
+    })
     .then(results => dispatch(toggleFollowPitch(false)))
     .catch(error => dispatch(pitchFollowError(error)))
   }
