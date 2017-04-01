@@ -5,7 +5,7 @@ import TrendingVideos from './TrendingVideos.jsx';
 import axios from 'axios';
 import { Container, Dimmer, Divider, Loader } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { fetchTopPitches } from '../actions/pitch';
+import { fetchBothCategoryPitches } from '../actions/pitch';
 
 class App extends Component {
   constructor(props) {
@@ -14,7 +14,7 @@ class App extends Component {
 
   componentWillMount() {
     const {dispatch} = this.props;
-    dispatch(fetchTopPitches())
+    dispatch(fetchBothCategoryPitches())
   }
 
   render() {
@@ -42,8 +42,10 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => {
+  console.log('App.js ', state);
   return {
-    pitches: state.pitches.pitches,
+    topPitches: state.pitches.topPitches,
+    trendingPitches: state.pitches.trendingPitches ? state.pitches.trendingPitches : null,
     mainPitch: state.pitches.mainPitch
   }
 }
