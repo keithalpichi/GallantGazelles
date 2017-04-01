@@ -14,6 +14,20 @@ const receivePitches = (json) => {
   }
 }
 
+const receiveBothCategoryPitches = (json) => {
+  return {
+    type: 'RECEIVE_BOTH_CATEGORY_PITCHES',
+    pitches: json.data
+  }
+}
+
+const receiveTrendingPitches = (json) => {
+  return {
+    type: 'RECEIVE_TRENDING_PITCHES',
+    pitches: json.data
+  }
+}
+
 const errorPitches = (err) => {
   return {
     type: 'REQUEST_PITCHES_ERROR',
@@ -30,11 +44,30 @@ export function fetchPitches(category = 'all') {
   }
 }
 
+export function fetchBothCategoryPitches(category = 'both') {
+  return function(dispatch) {
+    dispatch(requestPitches());
+    //We can possibly define categories here?
+    axios.get('http://localhost:8080/api/pitches?q=both')
+    .then(results => dispatch(receivePitches(results)))
+    .catch(error => dispatch(errorPitches(error)))
+  }
+}
+
 export function fetchTopPitches(category = 'top') {
   return function(dispatch) {
     dispatch(requestPitches());
     axios.get('http://localhost:8080/api/pitches?q=top')
     .then(results => dispatch(receivePitches(results)))
+    .catch(error => dispatch(errorPitches(error)))
+  }
+}
+
+export function fetchTrendingPitches(category = 'trending') {
+  return function(dispatch) {
+    dispatch(requestPitches());
+    axios.get('http://localhost:8080/api/pitches?q=trending')
+    .then(results => dispatch(receiveTrendingPitches(results)))
     .catch(error => dispatch(errorPitches(error)))
   }
 }
