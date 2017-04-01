@@ -11,7 +11,7 @@ const renderColumns = (array, columnAmount) => {
     let innerArray = []
     for (var j = i; j < columnAmount; j++) {
       let innerItem = array[j]
-      innerArray.push(innerItem)
+      if (innerItem) { innerArray.push(innerItem) }
     }
     if (innerArray.length > 0) { map.push(innerArray) }
     if (i + columnAmount >= array.length) {
@@ -49,9 +49,9 @@ class TrendingVideos extends React.Component {
           </Header>
         </Divider>
         <Divider hidden />
-        <Menu attached='top'>
-          <Menu.Item name='trending' active={this.props.pitchCategory === 'trending'} onClick={this.props.setPitchCategoryToTrending} />
-          <Menu.Item name='top' active={this.props.pitchCategory === 'top'} onClick={this.props.setPitchCategoryToTop} />
+        <Menu attached='top' tabular>
+          <Menu.Item name='trending' active={this.props.pitchCategory === 'trending'} onClick={this.props.setPitchCategoryToTop} />
+          <Menu.Item name='top' active={this.props.pitchCategory === 'top'} onClick={this.props.setPitchCategoryToTrending} />
         </Menu>
         <Segment attached='bottom'>
           {this.props.pitches.length > 0 ? renderColumns(this.props.pitches, 3) : <div>There is currently no {this.props.pitchCategory} pitches.</div>}
