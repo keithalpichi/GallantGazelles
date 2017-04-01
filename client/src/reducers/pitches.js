@@ -33,7 +33,7 @@ export default function pitches (state = initialState, action) {
       return {
         ...state,
         isFetching: false,
-        mainPitch: action.pitches.trendingPitches ? action.pitches.trendingPitches[0] : action.pitches.topPitches[0],
+        mainPitch: action.pitches.trendingPitches.length > 0 ? action.pitches.trendingPitches[0] : action.pitches.topPitches[0],
         trendingPitches: action.pitches.trendingPitches ? action.pitches.trendingPitches : [],
         topPitches: action.pitches.topPitches ? action.pitches.topPitches : [],
         error: null
