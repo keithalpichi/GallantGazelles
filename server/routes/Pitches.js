@@ -15,6 +15,22 @@ module.exports.getPitches = (req, res, next) => {
         .then(results => res.status(200).send(results.rows))
         .catch(error => res.status(404).json(error));
     }
+  } else if (q === 'both') {
+    let data = {}
+    Pitch.getTrendingPitches(10)
+      .then(results => data.trendingPitches = results.rows)
+      .then(() => {
+        return Pitch.getTopPitches(10)
+      })
+      .then(results => {
+        data.topPitches = results.rows
+        res.status(200).send(data)
+      })
+      .catch(error => res.status(404).json(error));
+  } else if (q === 'trending') {
+    Pitch.getTrendingPitches(10)
+      .then(results => res.status(200).send(results.rows))
+      .catch(error => res.status(404).json(error));
   } else if (q === 'top') {
     Pitch.getTopPitches(10)
       .then(results => res.status(200).send(results.rows))
