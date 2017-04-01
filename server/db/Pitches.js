@@ -31,21 +31,11 @@ LIMIT ${byAmount}
 
 module.exports.getTrendingPitches = (byAmount = 10) => {
 	return db.query(`
-SELECT
-	pitchTable.*, followertable.follow_count, votestable.votes
-FROM
-	pitches AS pitchTable
-LEFT JOIN
-	(SELECT count(followers.id) follow_count, pitch_id FROM followers GROUP BY pitch_id) AS followertable
-	ON (pitchTable.id = followertable.pitch_id)
-RIGHT JOIN
-	(SELECT sum(vote_type) votes, pitch_id FROM votes WHERE (extract(day from age(now(), timestamp)) < 1) GROUP BY pitch_id)
-	AS votestable
-	ON (pitchTable.id = votestable.pitch_id)
-ORDER BY
-	votes DESC NULLS LAST
-LIMIT ${byAmount}
-;`)
+SELECT pitchTable.*, followertable.follow_count, votestable.votes
+FROM pitches AS pitchTable
+LEFT JOIN (SELECT count(followers.id) follow_count, pitch_id FROM followers GROUP BY pitch_id) AS followertable ON (pitchTable.id = followertable.pitch_id)
+RIGHT JOIN (SELECT sum(vote_type) votes, pitch_id FROM votes WHERE (extract(day from age(now(), timestamp)) < 1) GROUP BY pitch_id) AS votestable ON (pitchTable.id = votestable.pitch_id)
+ORDER BY votes DESC NULLS LAST LIMIT ${byAmount};`)
 }
 
 
