@@ -1,7 +1,8 @@
 const initialState = {
   isFetching: false,
   mainPitch: {},
-  pitches: [],
+  topPitches: [],
+  trendingPitches: [],
   error: null,
   index: 0
 }
@@ -28,12 +29,29 @@ export default function pitches (state = initialState, action) {
         mainPitch: state.pitches.filter(pitch => pitch.id === action.pitchId)[0],
         index: pitchIdArray.indexOf(action.pitchId)
       };
+    case 'RECEIVE_BOTH_CATEGORY_PITCHES':
+      return {
+        ...state,
+        isFetching: false,
+        mainPitch: action.pitches.trendingPitches ? action.pitches.trendingPitches : action.pitches.topPitches,
+        trendingPitches: action.pitches.trendingPitches ? action.pitches.trendingPitches : [],
+        topPitches: action.pitches.topPitches ? action.pitches.topPitches : [],
+        error: null
+      }
+    case 'RECEIVE_TRENDING_PITCHES':
+      return {
+        ...state,
+        isFetching: false,
+        mainPitch: action.pitches.trendingPitches[state.index],
+        trendingPitches: action.pitches.trendingPitches.slice(1),
+        error: null
+      };
     case 'RECEIVE_PITCHES':
       return {
         ...state,
         isFetching: false,
-        mainPitch: action.pitches[state.index],
-        pitches: action.pitches.slice(1),
+        mainPitch: action.pitches.topPitches[state.index],
+        topPitches: action.pitches.topPitches.slice(1),
         error: null
       };
     case 'NEXT_PITCH':
